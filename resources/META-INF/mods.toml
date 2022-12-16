@@ -1,14 +1,14 @@
 modLoader="javafml"
 loaderVersion="[33,)"
-license="The Unlicense"
+license="GNU LGPL 3.0"
 
 [[mods]]
     modId="wailaharvestability"
     version="${file.jarVersion}"
     displayName="Waila Harvestability"
-    displayURL="https://www.curseforge.com/minecraft/mc-mods/waila-harvestability"
-    issueTrackerURL="https://github.com/squeek502/WailaHarvestability/issues"
-    authors="squeek"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/waila-harvestability-renewed"
+    issueTrackerURL="https://github.com/embeddedt/WailaHarvestabilityRenewed/issues"
+    authors="squeek, embeddedt"
     credits=""
     description='''
     An add-on for Waila that adds information about the harvestability of what you are looking at
@@ -31,6 +31,6 @@ license="The Unlicense"
 [[dependencies.wailaharvestability]]
     modId="tconstruct"
     mandatory=false
-    versionRange="[3.0.2.73,)"
+    versionRange="[3.3.4.336,)"
     ordering="AFTER"
     side="BOTH"
