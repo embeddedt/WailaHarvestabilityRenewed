@@ -2,6 +2,7 @@ package squeek.wailaharvestability;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ToolItem;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -20,8 +21,8 @@ public class TooltipHandler
         if (item instanceof ToolItem && Config.MAIN.harvestLevelTooltip.get())
         {
             int harvestLevel = ToolHelper.getToolHarvestLevel(((ToolItem) item), event.getItemStack());
-            String harvestName = StringHelper.getHarvestLevelName(harvestLevel);
-            event.getToolTip().add(new TranslationTextComponent("wailaharvestability.harvestlevel").appendString(harvestName));
+            ITextComponent harvestName = StringHelper.getHarvestLevelName(harvestLevel);
+            event.getToolTip().add(new TranslationTextComponent("wailaharvestability.harvestlevel").append(harvestName));
         }
     }
 }

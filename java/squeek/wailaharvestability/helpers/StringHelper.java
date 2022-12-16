@@ -4,6 +4,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -25,13 +26,13 @@ public class StringHelper
 		}
 	}
 
-	public static String getHarvestLevelName(int num)
+	public static ITextComponent getHarvestLevelName(int num)
 	{
 		if (getHarvestLevelName != null)
 		{
 			try
 			{
-				return (String) getHarvestLevelName.invoke(null, num);
+				return (ITextComponent)getHarvestLevelName.invoke(null, num);
 			}
 			catch (Exception e)
 			{
@@ -41,9 +42,9 @@ public class StringHelper
 		String unlocalized = "wailaharvestability.harvestlevel" + (num + 1);
 
 		if (I18n.hasKey(unlocalized))
-			return I18n.format(unlocalized);
+			return new TranslationTextComponent(unlocalized);
 
-		return String.valueOf(num);
+		return new StringTextComponent(String.valueOf(num));
 	}
 
 	public static ITextComponent concatenateStringList(List<ITextComponent> textComponents, String separator)

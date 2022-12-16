@@ -139,7 +139,7 @@ public class WailaHandler implements IComponentProvider, IWailaPlugin
 			if (harvestLevel >= 1 && (showHarvestLevel || showHarvestLevelNum))
 			{
 				String harvestLevelString = "";
-				String harvestLevelName = StringHelper.stripFormatting(StringHelper.getHarvestLevelName(harvestLevel));
+				String harvestLevelName = StringHelper.stripFormatting(StringHelper.getHarvestLevelName(harvestLevel).getString());
 				String harvestLevelNum = String.valueOf(harvestLevel);
 
 				// only show harvest level number and name if they are different

@@ -1,11 +1,11 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://maven.minecraftforge.net' }
         jcenter()
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -14,10 +14,17 @@ apply plugin: 'eclipse'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 repositories {
-  maven {
-    name = "Hwyla"
-    url = "https://maven.tehnut.info"
-  }
+    maven { url "https://maven.bai.lol" }
+    maven {
+        name 'DVS1 Maven FS'
+        url 'https://dvs1.progwml6.com/files/maven'
+    }
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 minecraft {
@@ -25,6 +32,8 @@ minecraft {
 
     runs {
         client {
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             workingDirectory project.file('run')
             mods {
                 wailaharvestability {
@@ -62,7 +71,12 @@ sourceSets.main.resources.srcDirs += 'resources'
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    compile fg.deobf("mcp.mobius.waila:Hwyla:${hwyla_version}_1.16.1")
+    implementation fg.deobf("mcp.mobius.waila:wthit:forge-${wthit_version}")
+
+    implementation fg.deobf("slimeknights.mantle:Mantle:1.16.5-1.6.154")
+    implementation fg.deobf("slimeknights.tconstruct:TConstruct:1.16.5-3.3.4.336")
+
+    runtimeOnly fg.deobf("curse.maven:lazydfu-460819:3249059")
 }
 
 jar {
