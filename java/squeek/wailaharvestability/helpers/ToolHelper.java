@@ -44,7 +44,7 @@ public class ToolHelper
 
 	public static boolean canToolHarvestBlock(@Nonnull ItemStack tool, BlockState blockState)
 	{
-		return !blockState.getRequiresTool() || tool.canHarvestBlock(blockState);
+		return !blockState.requiresCorrectToolForDrops() || tool.isCorrectToolForDrops(blockState);
 	}
 
 	public static int getToolHarvestLevel(ToolItem tool, @Nonnull ItemStack toolStack)

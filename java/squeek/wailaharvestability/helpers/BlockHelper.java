@@ -36,13 +36,13 @@ public class BlockHelper
 		ToolType effectiveTool = state.getHarvestTool();
 		if (effectiveTool == null)
 		{
-			float hardness = state.getBlockHardness(world, blockPos);
+			float hardness = state.getDestroySpeed(world, blockPos);
 			if (hardness > 0.0F)
 			{
 				for (Map.Entry<ToolType, ItemStack> testToolEntry : testTools.entrySet())
 				{
 					ItemStack testTool = testToolEntry.getValue();
-					if (testTool != null && !testTool.isEmpty() && testTool.getItem() instanceof TieredItem && testTool.getDestroySpeed(state) >= ItemTier.WOOD.getEfficiency())
+					if (testTool != null && !testTool.isEmpty() && testTool.getItem() instanceof TieredItem && testTool.getDestroySpeed(state) >= ItemTier.WOOD.getSpeed())
 					{
 						effectiveTool = testToolEntry.getKey();
 						break;
@@ -55,7 +55,7 @@ public class BlockHelper
 
 	public static boolean isBlockUnbreakable(World world, BlockPos blockPos, BlockState state)
 	{
-		return state.getBlockHardness(world, blockPos) == -1.0F;
+		return state.getDestroySpeed(world, blockPos) == -1.0F;
 	}
 
 	public static boolean isAdventureModeAndBlockIsUnbreakable(PlayerEntity player, BlockPos pos)
@@ -65,18 +65,18 @@ public class BlockHelper
 			return false;
 
 		NetworkPlayerInfo networkplayerinfo = netHandler.getPlayerInfo(player.getGameProfile().getId());
-		GameType gameType = networkplayerinfo.getGameType();
+		GameType gameType = networkplayerinfo.getGameMode();
 
 		if (gameType != GameType.ADVENTURE)
 			return false;
 
-		if (player.isAllowEdit())
+		if (player.mayBuild())
 			return false;
 
-		ItemStack heldItem = player.getHeldItemMainhand();
-		World world = player.world;
+		ItemStack heldItem = player.getMainHandItem();
+		World world = player.level;
 
-		return gameType == GameType.SPECTATOR || heldItem.isEmpty() || !heldItem.canDestroy(world.getTags(), new CachedBlockInfo(world, pos, false));
+		return gameType == GameType.SPECTATOR || heldItem.isEmpty() || !heldItem.hasAdventureModeBreakTagForBlock(world.getTagManager(), new CachedBlockInfo(world, pos, false));
 	}
 
 	/**
@@ -85,22 +85,22 @@ public class BlockHelper
 	 */
 	public static boolean canHarvestBlock(BlockState state, PlayerEntity player)
 	{
-		if (!state.getRequiresTool())
+		if (!state.requiresCorrectToolForDrops())
 		{
 			return true;
 		}
 
-		ItemStack stack = player.getHeldItemMainhand();
+		ItemStack stack = player.getMainHandItem();
 		ToolType tool = state.getHarvestTool();
 		if (stack.isEmpty() || tool == null)
 		{
-			return player.func_234569_d_(state);
+			return player.hasCorrectToolForDrops(state);
 		}
 
 		int toolLevel = stack.getItem().getHarvestLevel(stack, tool, player, state);
 		if (toolLevel < 0)
 		{
-			return player.func_234569_d_(state);
+			return player.hasCorrectToolForDrops(state);
 		}
 
 		return toolLevel >= state.getHarvestLevel();

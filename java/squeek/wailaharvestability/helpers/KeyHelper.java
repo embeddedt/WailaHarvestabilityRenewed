@@ -9,9 +9,9 @@ public class KeyHelper
 	public static boolean isCtrlKeyDown()
 	{
 		// prioritize CONTROL, but allow OPTION as well on Mac (note: GuiScreen's isCtrlKeyDown only checks for the OPTION key on Mac)
-		long handle = Minecraft.getInstance().getMainWindow().getHandle();
+		long handle = Minecraft.getInstance().getWindow().getWindow();
 		boolean isCtrlKeyDown = InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_LEFT_CONTROL) || InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_RIGHT_CONTROL);
-		if (!isCtrlKeyDown && Minecraft.IS_RUNNING_ON_MAC)
+		if (!isCtrlKeyDown && Minecraft.ON_OSX)
 			isCtrlKeyDown = InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_LEFT_ALT) || InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_RIGHT_ALT);
 
 		return isCtrlKeyDown;
@@ -19,7 +19,7 @@ public class KeyHelper
 
 	public static boolean isShiftKeyDown()
 	{
-		long handle = Minecraft.getInstance().getMainWindow().getHandle();
+		long handle = Minecraft.getInstance().getWindow().getWindow();
 		return InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_LEFT_SHIFT) || InputMappings.isKeyDown(handle, GLFW.GLFW_KEY_RIGHT_SHIFT);
 	}
 }

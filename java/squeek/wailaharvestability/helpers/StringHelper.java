@@ -41,7 +41,7 @@ public class StringHelper
 
 		String unlocalized = "wailaharvestability.harvestlevel" + (num + 1);
 
-		if (I18n.hasKey(unlocalized))
+		if (I18n.exists(unlocalized))
 			return new TranslationTextComponent(unlocalized);
 
 		return new StringTextComponent(String.valueOf(num));
@@ -61,6 +61,6 @@ public class StringHelper
 
 	public static String stripFormatting(String str)
 	{
-		return TextFormatting.getTextWithoutFormattingCodes(str);
+		return TextFormatting.stripFormatting(str);
 	}
 }
